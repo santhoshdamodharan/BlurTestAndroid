@@ -1,19 +1,8 @@
-def Properties localProps = getSigningProperties()
-
 apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
-
-    signingConfigs {
-        release {
-            storeFile file(localProps.getProperty('RELEASE_KEYSTORE_PATH','fillhere'))
-            storePassword localProps.getProperty('RELEASE_KEYSTORE_PW','')
-            keyAlias localProps.getProperty('RELEASE_KEY_ALIAS','')
-            keyPassword localProps.getProperty('RELEASE_KEY_PW','')
-        }
-    }
 
     defaultConfig {
         minSdkVersion 14
@@ -42,7 +31,6 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt");
             proguardFiles 'proguard-rules.txt'
-            signingConfig signingConfigs.release
         }
     }
     packagingOptions {
@@ -65,16 +53,5 @@ dependencies {
 //    compile project(':paralloid')
 //    compile project(':ne10blur')
     compile fileTree(dir: 'libs', include: ['*.jar'])
-}
-
-
-def getSigningProperties() {
-    def Properties props = new Properties()
-    try {
-        props.load(new FileInputStream(file('../signing.properties')))
-    }catch (Exception e) {//just load any file to not get error
-        props.load(new FileInputStream(file('/proguard-rules.txt')))
-    }
-    return props
 }
 
