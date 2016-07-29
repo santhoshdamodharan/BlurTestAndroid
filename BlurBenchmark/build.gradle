@@ -73,7 +73,7 @@ def getSigningProperties() {
     try {
         props.load(new FileInputStream(file('../signing.properties')))
     }catch (Exception e) {//just load any file to not get error
-        props.load(new FileInputStream(file('/progaurd-rules.txt')))
+        props.load(new FileInputStream(file('/proguard-rules.txt')))
     }
     return props
 }
